@@ -5,6 +5,7 @@ import {NavigationContainer, useFocusEffect, useNavigation, useRoute} from "@rea
 import {useState} from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import NumericInput from 'react-native-numeric-input'
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 
@@ -121,7 +122,21 @@ const Tab = createBottomTabNavigator();
 const App   = () => {
     return (
         <NavigationContainer>
-            <Tab.Navigator>
+            <Tab.Navigator
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, size, color }) => {
+                        let iconName;
+                        if (route.name == "Home") {
+                            iconName = focused ? "home" : "home-outline";
+                        } else if (route.name == "AddItem") {
+                            iconName = focused ? "add-circle" : "add-circle-outline";
+                        }
+                        return <Ionicons name={iconName} size={size} color={color} />;
+                    },
+                    tabBarActiveTintColor: "violet",
+                    tabBarInactiveTintColor: "grey",
+                })}
+            >
                 <Tab.Screen name="Home" component={HomeView} initialParams={{ addElement: null }}/>
                 <Tab.Screen name="AddItem" component={AddItemView} />
             </Tab.Navigator>
